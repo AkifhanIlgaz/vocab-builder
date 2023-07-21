@@ -1,0 +1,7 @@
+{
+  "name": "vocab-builder",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "react-vite"
+}
