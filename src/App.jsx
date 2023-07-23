@@ -25,6 +25,7 @@ import './theme/style.scss'
 import Login from './pages/SignIn'
 import SignUp from './pages/SignUp'
 import ForgotPassword from './pages/ForgotPassword'
+import ResetPassword from './pages/Reset-Password'
 
 setupIonicReact()
 
@@ -41,8 +42,11 @@ const App = () => (
 				<Route exact path="/forgot-password">
 					<ForgotPassword />
 				</Route>
+				<Route exact path="/reset-password">
+					<ResetPassword />
+				</Route>
 				<Route exact path="/">
-					<Redirect to="/login"></Redirect>
+					<Redirect to="/signin"></Redirect>
 				</Route>
 			</IonRouterOutlet>
 		</IonReactRouter>
