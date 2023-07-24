@@ -6,12 +6,12 @@ import FormWrapper from '../layouts/FormWrapper'
 import basePath from '../atoms/path'
 import axios from 'axios'
 import { useRecoilState } from 'recoil'
-import logState from '../atoms/user'
+import sessionState from '../atoms/session'
 
 export const SignUp = () => {
 	const history = useHistory()
 
-	const [log, setLog] = useRecoilState(logState)
+	const [session, setSession] = useRecoilState(sessionState)
 
 	const {
 		register,
@@ -19,14 +19,51 @@ export const SignUp = () => {
 		formState: { errors }
 	} = useForm()
 
+	function setCookie(name, value, options = {}) {
+		options = {
+			path: '/',
+			// add other defaults here if necessary
+			...options
+		}
+
+		if (options.expires instanceof Date) {
+			options.expires = options.expires.toUTCString()
+		}
+
+		let updatedCookie = encodeURIComponent(name) + '=' + encodeURIComponent(value)
+
+		for (let optionKey in options) {
+			updatedCookie += '; ' + optionKey
+			let optionValue = options[optionKey]
+			if (optionValue !== true) {
+				updatedCookie += '=' + optionValue
+			}
+		}
+
+		document.cookie = updatedCookie
+	}
+
 	const onSubmit = async data => {
 		const url = basePath + '/signup'
 		const req = await axios.postForm(url, data)
-		if (req.status != 200) {
-			// TODO: Add error. Something went wrong please try again
-			return
-		}
-		setLog(true)
+		// TODO: Change status code to StatusFound
+		// if (req.status != 200) {
+		// 	// TODO: Add error. Something went wrong please try again
+		// 	return
+		// }
+		console.log(req.data)
+		setSession(req.data)
+		console.log(session)
+	}
+
+	const goProfile = async () => {
+		const url = basePath + '/profile'
+
+		const req = await axios.get(url, {
+			Cookie: 'session=VlY8K3Vy7pXq1Sz60gxDo2ZJELh7EuWXKnfmm7he6qE=;'
+		})
+
+		console.log(req)
 	}
 
 	return (
@@ -56,6 +93,7 @@ export const SignUp = () => {
 					</IonCol>
 				</IonRow>
 			</IonCardContent>
+			<IonButton onClick={goProfile}>Go to Profile</IonButton>
 		</FormWrapper>
 	)
 }

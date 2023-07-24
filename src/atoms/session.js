@@ -3,10 +3,10 @@ import { recoilPersist } from 'recoil-persist'
 
 const { persistAtom } = recoilPersist()
 
-export const logState = atom({
-	key: 'loggedIn',
-	default: null,
+export const sessionState = atom({
+	key: 'session',
+	default: '',
 	effects_UNSTABLE: [persistAtom]
 })
 
-export default logState
+export default sessionState

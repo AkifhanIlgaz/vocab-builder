@@ -7,7 +7,7 @@ import { logInOutline } from 'ionicons/icons'
 import basePath from '../atoms/path'
 import axios from 'axios'
 import { useRecoilState } from 'recoil'
-import logState from '../atoms/user'
+import sessionState from '../atoms/session'
 import { send } from 'ionicons/icons'
 
 export const ResetPassword = () => {
