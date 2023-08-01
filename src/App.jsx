@@ -25,6 +25,8 @@ import './theme/variables.css'
 import { useRecoilState } from 'recoil'
 import userState from './atoms/user'
 import ForgotPassword from './pages/ForgotPassword'
+import Home from './pages/Home'
+import Profile from './pages/Profile'
 import ResetPassword from './pages/Reset-Password'
 import { SignIn } from './pages/SignIn'
 import SignUp from './pages/SignUp'
@@ -43,7 +45,12 @@ const App = () => {
 							<Route path={['/', '/signin', '/signup', '/password-reset']} exact={true}>
 								<Redirect to="/home"></Redirect>
 							</Route>
-							<Route path="/profile" exact={true}></Route>
+							<Route path="/home" exact={true}>
+								<Home />
+							</Route>
+							<Route path="/profile" exact={true}>
+								<Profile />
+							</Route>
 						</>
 					) : (
 						<>
