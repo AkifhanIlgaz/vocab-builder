@@ -24,7 +24,6 @@ export const ResetPassword = () => {
 			// TODO: Add error
 			return
 		}
-		setLog(true)
 	}
 
 	return (

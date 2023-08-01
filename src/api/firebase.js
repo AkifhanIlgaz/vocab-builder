@@ -6,9 +6,9 @@ import firebaseConfig from './firebaseConfig'
 
 firebase.initializeApp(firebaseConfig)
 
-export const Users = 'users'
+export const UsersCollection = 'users'
 
-class Request {
+class Firebase {
 	constructor() {
 		this.auth = firebase.auth()
 		this.firestore = firebase.firestore()
@@ -170,3 +170,5 @@ class Request {
 		}
 	}
 }
+
+export default Firebase

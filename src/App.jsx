@@ -23,15 +23,16 @@ import './theme/style.scss'
 import './theme/variables.css'
 
 import { useRecoilState } from 'recoil'
+import userState from './atoms/user'
 import ForgotPassword from './pages/ForgotPassword'
 import ResetPassword from './pages/Reset-Password'
-import Login from './pages/SignIn'
+import { SignIn } from './pages/SignIn'
 import SignUp from './pages/SignUp'
 
 setupIonicReact()
 
 const App = () => {
-	const [user, setUser] = useRecoilState(userState)
+	const [user] = useRecoilState(userState)
 
 	return (
 		<IonApp>
@@ -47,7 +48,7 @@ const App = () => {
 					) : (
 						<>
 							<Route exact path="/signin">
-								<Login />
+								<SignIn />
 							</Route>
 							<Route exact path="/signup">
 								<SignUp />

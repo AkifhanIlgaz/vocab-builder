@@ -1,16 +1,15 @@
 import { IonButton, IonCardContent, IonCol, IonIcon, IonInput, IonLabel, IonRow } from '@ionic/react'
-import axios from 'axios'
 import { personCircleOutline } from 'ionicons/icons'
 import { useForm } from 'react-hook-form'
 import { useHistory } from 'react-router-dom'
 import { useRecoilState } from 'recoil'
-import basePath from '../atoms/path'
+import Firebase from '../api/firebase'
+import userState from '../atoms/user'
 import FormWrapper from '../layouts/FormWrapper'
 
 export const SignUp = () => {
 	const history = useHistory()
-
-	const [session, setSession] = useRecoilState(sessionState)
+	const [user, setUser] = useRecoilState(userState)
 
 	const {
 		register,
@@ -18,51 +17,20 @@ export const SignUp = () => {
 		formState: { errors }
 	} = useForm()
 
-	function setCookie(name, value, options = {}) {
-		options = {
-			path: '/',
-			// add other defaults here if necessary
-			...options
-		}
-
-		if (options.expires instanceof Date) {
-			options.expires = options.expires.toUTCString()
-		}
-
-		let updatedCookie = encodeURIComponent(name) + '=' + encodeURIComponent(value)
-
-		for (let optionKey in options) {
-			updatedCookie += '; ' + optionKey
-			let optionValue = options[optionKey]
-			if (optionValue !== true) {
-				updatedCookie += '=' + optionValue
-			}
-		}
-
-		document.cookie = updatedCookie
-	}
-
 	const onSubmit = async data => {
-		const url = basePath + '/signup'
-		const req = await axios.postForm(url, data)
-		// TODO: Change status code to StatusFound
-		// if (req.status != 200) {
-		// 	// TODO: Add error. Something went wrong please try again
-		// 	return
-		// }
-		console.log(req.data)
-		setSession(req.data)
-		console.log(session)
-	}
-
-	const goProfile = async () => {
-		const url = basePath + '/profile'
-
-		const req = await axios.get(url, {
-			Cookie: 'session=VlY8K3Vy7pXq1Sz60gxDo2ZJELh7EuWXKnfmm7he6qE=;'
-		})
-
-		console.log(req)
+		const firebase = new Firebase()
+		try {
+			const res = await firebase.signUpWithEmail(data.email, data.password)
+			if (res === false) {
+				alert('Error', 'Email is already taken')
+				return
+			}
+			console.log(res)
+			setUser(res)
+			history.push('/home')
+		} catch (error) {
+			console.log(error)
+		}
 	}
 
 	return (
@@ -92,7 +60,6 @@ export const SignUp = () => {
 					</IonCol>
 				</IonRow>
 			</IonCardContent>
-			<IonButton onClick={goProfile}>Go to Profile</IonButton>
 		</FormWrapper>
 	)
 }

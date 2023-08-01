@@ -1,16 +1,16 @@
 import { IonButton, IonCardContent, IonCol, IonIcon, IonInput, IonLabel, IonRow } from '@ionic/react'
-import axios from 'axios'
 import { logInOutline } from 'ionicons/icons'
 import { React } from 'react'
 import { useForm } from 'react-hook-form'
 import { useHistory } from 'react-router-dom'
 import { useRecoilState } from 'recoil'
-import basePath from '../atoms/path'
+import Firebase from '../api/firebase'
+import userState from '../atoms/user'
 import FormWrapper from '../layouts/FormWrapper'
 
-export const Login = () => {
+export const SignIn = () => {
 	const history = useHistory()
-	const [log, setLog] = useRecoilState(logState)
+	const [, setUser] = useRecoilState(userState)
 
 	const {
 		register,
@@ -19,15 +19,19 @@ export const Login = () => {
 	} = useForm()
 
 	const onSubmit = async data => {
-		const url = basePath + '/signin'
-		const req = await axios.postForm(url, data)
-		console.log(req)
-		if (req.status !== 200) {
-			// TODO: Add error
-			return
+		const firebase = new Firebase()
+		try {
+			const res = await firebase.signInWithEmail(data.email, data.password)
+			if (res === false) {
+				console.log(`Account doesn't exist`)
+				history.push('/signup')
+				return
+			}
+			setUser(res)
+			history.push('/home')
+		} catch (error) {
+			console.log(error)
 		}
-
-		setLog(true)
 	}
 
 	return (
@@ -70,4 +74,4 @@ export const Login = () => {
 	)
 }
 
-export default Login
+export default SignIn
