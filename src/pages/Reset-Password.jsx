@@ -1,14 +1,11 @@
-import { IonCardContent, IonCol, IonButton, IonInput, IonLabel, IonRow, IonIcon } from '@ionic/react'
+import { IonButton, IonCardContent, IonCol, IonIcon, IonInput, IonLabel, IonRow } from '@ionic/react'
+import axios from 'axios'
+import { send } from 'ionicons/icons'
 import { React } from 'react'
 import { useForm } from 'react-hook-form'
 import { useHistory } from 'react-router-dom'
-import FormWrapper from '../layouts/FormWrapper'
-import { logInOutline } from 'ionicons/icons'
 import basePath from '../atoms/path'
-import axios from 'axios'
-import { useRecoilState } from 'recoil'
-import sessionState from '../atoms/session'
-import { send } from 'ionicons/icons'
+import FormWrapper from '../layouts/FormWrapper'
 
 export const ResetPassword = () => {
 	const history = useHistory()

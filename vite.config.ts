@@ -6,6 +6,6 @@ import { defineConfig } from 'vite'
 export default defineConfig({
 	plugins: [react(), legacy()],
 	server: {
-		port: 8100
+		port: 3000
 	}
 })

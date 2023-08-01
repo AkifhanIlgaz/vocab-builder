@@ -1,12 +1,11 @@
-import { IonButton, IonCardContent, IonCol, IonIcon, IonInput, IonLabel, IonRow, useIonAlert } from '@ionic/react'
+import { IonButton, IonCardContent, IonCol, IonIcon, IonInput, IonLabel, IonRow } from '@ionic/react'
+import axios from 'axios'
 import { personCircleOutline } from 'ionicons/icons'
 import { useForm } from 'react-hook-form'
-import { useHistory, useLocation } from 'react-router-dom'
-import FormWrapper from '../layouts/FormWrapper'
-import basePath from '../atoms/path'
-import axios from 'axios'
+import { useHistory } from 'react-router-dom'
 import { useRecoilState } from 'recoil'
-import sessionState from '../atoms/session'
+import basePath from '../atoms/path'
+import FormWrapper from '../layouts/FormWrapper'
 
 export const SignUp = () => {
 	const history = useHistory()
