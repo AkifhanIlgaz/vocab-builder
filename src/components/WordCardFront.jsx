@@ -1,5 +1,5 @@
 import { IonButton, IonCard, IonCardContent, IonCardHeader, IonCardTitle, IonIcon } from '@ionic/react'
-import { book, volumeHigh } from 'ionicons/icons'
+import { book, checkmarkOutline, closeOutline, volumeHigh } from 'ionicons/icons'
 import { React } from 'react'
 
 const WordCardFront = ({ word, side, setSide }) => {
@@ -55,8 +55,12 @@ const WordCardFront = ({ word, side, setSide }) => {
 					alignItems: 'center'
 				}}
 			>
-				<IonButton color={'danger'}>Cancel</IonButton>
-				<IonButton color={'success'}>OK</IonButton>
+				<IonButton color={'danger'}>
+					<IonIcon icon={closeOutline}></IonIcon>
+				</IonButton>
+				<IonButton color={'success'}>
+					<IonIcon icon={checkmarkOutline}></IonIcon>
+				</IonButton>
 			</div>
 		</>
 	)
