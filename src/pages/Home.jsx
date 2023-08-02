@@ -1,8 +1,11 @@
 import { IonCol, IonContent, IonGrid, IonPage, IonRow } from '@ionic/react'
-import { React } from 'react'
+import { React, useState } from 'react'
+import WordCardBack from '../components/WordCardBack'
 import WordCardFront from '../components/WordCardFront'
 
 export const Home = () => {
+	const [side, setSide] = useState(true)
+
 	const word = {
 		id: 6,
 		box: 0,
@@ -90,7 +93,7 @@ export const Home = () => {
 				<IonGrid className="ion-align-items-center ion-justify-content-center ion-height ">
 					<IonRow className="ion-align-items-center ion-justify-content-center ion-height">
 						<IonCol size="8" size-md="6" size-lg="4">
-							<WordCardFront word={word} />
+							{side === true ? <WordCardFront word={word} side={side} setSide={setSide} /> : <WordCardBack word={word} side={side} setSide={setSide} />}
 						</IonCol>
 					</IonRow>
 				</IonGrid>

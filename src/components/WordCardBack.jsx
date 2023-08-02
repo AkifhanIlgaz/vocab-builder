@@ -1,20 +1,14 @@
 import { IonButton, IonCard, IonCardContent, IonCardHeader, IonCardTitle, IonIcon } from '@ionic/react'
-import { megaphoneOutline } from 'ionicons/icons'
+import { book, volumeHigh } from 'ionicons/icons'
 import { React } from 'react'
 
-const WordCardBack = ({ word }) => {
+const WordCardBack = ({ word, side, setSide }) => {
 	const UK = new Audio(word.header.audio.UK)
 	const US = new Audio(word.header.audio.US)
 
-	/**
-	 *
-	 * @param {string} word
-	 * @param {string} example
-	 */
-
 	return (
 		<>
-			<IonCard className="auth-card">
+			<IonCard className="auth-card" onClick={() => setSide(!side)}>
 				<IonCardTitle
 					className="ion-padding"
 					style={{
@@ -28,11 +22,17 @@ const WordCardBack = ({ word }) => {
 					<div className="ion-floating-right">
 						<IonButton onClick={() => UK.play()}>
 							UK
-							<IonIcon icon={megaphoneOutline}></IonIcon>
+							<IonIcon icon={volumeHigh}></IonIcon>
 						</IonButton>
 						<IonButton onClick={() => US.play()}>
 							US
-							<IonIcon icon={megaphoneOutline}></IonIcon>
+							<IonIcon icon={volumeHigh}></IonIcon>
+						</IonButton>
+						<IonButton>
+							<a style={{ width: '0' }} href="https://www.oxfordlearnersdictionaries.com/definition/english/about_2" target="_blank" rel="noopener noreferrer">
+								Oxford
+							</a>
+							<IonIcon icon={book}></IonIcon>
 						</IonButton>
 					</div>
 				</IonCardTitle>
@@ -55,8 +55,8 @@ const WordCardBack = ({ word }) => {
 					alignItems: 'center'
 				}}
 			>
-				<IonButton color={'danger'}>Cancel</IonButton>
-				<IonButton color={'success'}>OK</IonButton>
+				<IonButton color={'danger'}></IonButton>
+				<IonButton color={'success'}></IonButton>
 			</div>
 		</>
 	)
