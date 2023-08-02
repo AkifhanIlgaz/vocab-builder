@@ -29,7 +29,7 @@ const WordCardFront = ({ word, side, setSide }) => {
 							<IonIcon icon={volumeHigh}></IonIcon>
 						</IonButton>
 						<IonButton>
-							<a style={{ width: '0' }} href="https://www.oxfordlearnersdictionaries.com/definition/english/about_2" target="_blank" rel="noopener noreferrer">
+							<a style={{ width: '0' }} href={word.source} target="_blank" rel="noopener noreferrer">
 								Oxford
 							</a>
 							<IonIcon icon={book}></IonIcon>

@@ -25,7 +25,6 @@ export const SignUp = () => {
 				alert('Error', 'Email is already taken')
 				return
 			}
-			console.log(res)
 			setUser(res)
 			history.push('/home')
 		} catch (error) {
