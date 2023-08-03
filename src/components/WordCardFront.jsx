@@ -2,13 +2,13 @@ import { IonButton, IonCard, IonCardContent, IonCardHeader, IonCardTitle, IonIco
 import { book, checkmarkOutline, closeOutline, volumeHigh } from 'ionicons/icons'
 import { React } from 'react'
 
-const WordCardFront = ({ word, side, setSide }) => {
+const WordCardFront = ({ word, parser }) => {
 	const UK = new Audio(word.header.audio.UK)
 	const US = new Audio(word.header.audio.US)
 
 	return (
 		<>
-			<IonCard className="auth-card" onClick={() => setSide(!side)}>
+			<IonCard className="word-card">
 				<IonCardTitle
 					className="ion-padding"
 					style={{
@@ -45,7 +45,7 @@ const WordCardFront = ({ word, side, setSide }) => {
 						</IonCardTitle>
 					</IonCardTitle>
 				</IonCardHeader>
-				<IonCardContent className="ion-floating-left">{word.definitions[0].examples[0]}</IonCardContent>
+				<IonCardContent className="ion-floating-left">{parser.parse(word.definitions[0].examples[0])}</IonCardContent>
 			</IonCard>
 			<div
 				style={{

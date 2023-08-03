@@ -1,14 +1,20 @@
 import { IonButton, IonCard, IonCardContent, IonCardHeader, IonCardTitle, IonIcon } from '@ionic/react'
 import { book, checkmarkOutline, closeOutline, volumeHigh } from 'ionicons/icons'
 import { React } from 'react'
+import Firebase from '../api/firebase'
 
-const WordCardBack = ({ word, side, setSide }) => {
+const WordCardBack = ({ word, parser }) => {
 	const UK = new Audio(word.header.audio.UK)
 	const US = new Audio(word.header.audio.US)
 
+	const fetchData = async () => {
+		const firebase = new Firebase()
+	}
+
 	return (
 		<>
-			<IonCard className="auth-card" onClick={() => setSide(!side)}>
+			<IonCard className="word-card">
+				Back
 				<IonCardTitle
 					className="ion-padding"
 					style={{
@@ -36,7 +42,6 @@ const WordCardBack = ({ word, side, setSide }) => {
 						</IonButton>
 					</div>
 				</IonCardTitle>
-
 				<IonCardHeader className="ion-text-center">
 					<IonCardTitle>
 						{word.word}
