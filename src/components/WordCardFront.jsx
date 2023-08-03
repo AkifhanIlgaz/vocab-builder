@@ -39,18 +39,15 @@ const WordCardFront = ({ word }) => {
 				>
 					Box: {word.box}
 					<div className="ion-floating-right">
-						<IonButton onClick={() => UK.play()}>
+						<IonButton onClick={() => UK.play()} size="small">
 							UK
-							<IonIcon icon={volumeHigh}></IonIcon>
+							<IonIcon icon={volumeHigh} slot="end"></IonIcon>
 						</IonButton>
-						<IonButton onClick={() => US.play()}>
+						<IonButton color={'danger'} onClick={() => US.play()} size="small">
 							US
-							<IonIcon icon={volumeHigh}></IonIcon>
+							<IonIcon icon={volumeHigh} slot="end"></IonIcon>
 						</IonButton>
-						<IonButton>
-							<a style={{ width: '0' }} href={word.source} target="_blank" rel="noopener noreferrer">
-								Oxford
-							</a>
+						<IonButton color={'warning'} size="small" href={word.source} target="_blank" rel="noopener noreferrer">
 							<IonIcon icon={book}></IonIcon>
 						</IonButton>
 					</div>

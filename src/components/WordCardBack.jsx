@@ -29,10 +29,7 @@ const WordCardBack = ({ word }) => {
 							US
 							<IonIcon icon={volumeHigh}></IonIcon>
 						</IonButton>
-						<IonButton>
-							<a style={{ width: '0' }} href={word.source} target="_blank" rel="noopener noreferrer">
-								Oxford
-							</a>
+						<IonButton href={word.source} target="_blank" rel="noopener noreferrer">
 							<IonIcon icon={book}></IonIcon>
 						</IonButton>
 					</div>

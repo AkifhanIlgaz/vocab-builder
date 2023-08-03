@@ -40,7 +40,7 @@ export const Home = () => {
 			<IonContent color={'primary'}>
 				<IonGrid className="ion-align-items-center ion-justify-content-center ">
 					<IonRow className="ion-align-items-center ion-justify-content-center">
-						<IonCol size-sm="4" size-md="6" size-lg="8">
+						<IonCol size="10" sizeXl="12" size-sm="4" size-md="6" size-lg="8">
 							{side === true ? <WordCardFront word={word} parser={parser} /> : <WordCardBack word={word} parser={parser} />}
 							<IonButton onClick={() => setSide(!side)}>
 								<IonIcon icon={repeatOutline}></IonIcon>
