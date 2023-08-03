@@ -10,31 +10,86 @@ export const Home = () => {
 	const [side, setSide] = useState(true)
 
 	const word = {
-		id: 3,
+		id: 6,
 		box: 0,
-		source: 'https://www.oxfordlearnersdictionaries.com/definition/english/able_1',
-		word: 'able',
+		source: 'https://www.oxfordlearnersdictionaries.com/definition/english/about_2',
+		word: 'about',
 		header: {
 			audio: {
-				UK: 'https://www.oxfordlearnersdictionaries.com/media/english/uk_pron/a/abl/able_/able__gb_1.mp3',
-				US: 'https://www.oxfordlearnersdictionaries.com/media/english/us_pron/a/abl/able_/able__us_2.mp3'
+				UK: 'https://www.oxfordlearnersdictionaries.com/media/english/uk_pron/a/abo/about/about__gb_1.mp3',
+				US: 'https://www.oxfordlearnersdictionaries.com/media/english/us_pron/a/abo/about/about__us_1.mp3'
 			},
-			partOfSpeech: 'adjective',
-			CEFRLevel: 'A2'
+			partOfSpeech: 'adverb',
+			CEFRLevel: 'A1'
 		},
 		definitions: [
 			{
-				meaning: 'having the skill, intelligence, opportunity, etc. needed to do something',
-				examples: ['You must be able to speak French for this job.', 'A viral illness left her <span class="cl"> barely able </span> to walk.', 'We&#39;re still <span class="cl">able to get</span> visas to come and go from Thailand.', 'I didn&#39;t feel able to disagree with him.', 'Will you be able to come?', 'Are you really <span class="cl">willing and able</span> to do what is necessary?', 'They don&#39;t even seem <span class="cl">able to see</span> what&#39;s good about their ideas.', 'These families are less able to afford a balanced, healthy diet.']
+				meaning: 'a little more or less than; a little before or after',
+				examples: ['It costs about $10.', 'They waited (for) about an hour.', 'He arrived (at) about ten.']
 			},
 			{
-				meaning: 'intelligent; good at something',
-				examples: ['She&#39;s the ablest student in the class.']
+				meaning: 'nearly; very close to',
+				examples: ['I&#39;m just about ready.', 'This is about the best we can hope for.']
+			},
+			{
+				meaning: 'in many directions; here and there',
+				examples: ['The children were rushing about in the garden.']
+			},
+			{
+				meaning: 'in no particular order; in various places',
+				examples: ['Her books were lying about on the floor.']
+			},
+			{
+				meaning: 'doing nothing in particular',
+				examples: ['People were standing about in the road.']
+			},
+			{
+				meaning: 'able to be found in a place',
+				examples: ['There was nobody about.', 'There&#39;s a lot of flu about.', 'She’s somewhere about—I saw her a few minutes ago.']
+			},
+			{
+				meaning: 'facing the opposite direction',
+				examples: ['He brought the ship about.']
 			}
 		],
-		idioms: null
+		idioms: [
+			{
+				usage: 'just about (informal)',
+				definition: [
+					{
+						meaning: 'almost; very nearly',
+						examples: ["I've met just about everyone.", '‘Did you reach your sales target?’ ‘Just about.’']
+					},
+					{
+						meaning: 'approximately',
+						examples: ['She should be arriving just about now.']
+					}
+				]
+			},
+			{
+				usage: 'out and about ',
+				definition: [
+					{
+						meaning: 'able to go outside again after an illness',
+						examples: null
+					},
+					{
+						meaning: 'travelling around a place',
+						examples: ["We've been out and about talking to people all over the country."]
+					}
+				]
+			},
+			{
+				usage: 'that’s about all | that’s about it ',
+				definition: [
+					{
+						meaning: 'used to say that you have finished telling somebody about something and there is nothing to add',
+						examples: ["‘Anything else?’ ‘No, that's about it for now.’"]
+					}
+				]
+			}
+		]
 	}
-
 	return (
 		<IonPage>
 			<IonContent color={'primary'}>

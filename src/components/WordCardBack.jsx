@@ -1,10 +1,12 @@
-import { IonButton, IonCard, IonCardContent, IonCardHeader, IonCardTitle, IonIcon, IonItem, IonList } from '@ionic/react'
-import { book, checkmarkOutline, closeOutline, volumeHigh } from 'ionicons/icons'
-import { React } from 'react'
+import { IonButton, IonCard, IonCardHeader, IonCardTitle, IonIcon, IonItem, IonList } from '@ionic/react'
+import { book, checkmarkOutline, chevronDownOutline, chevronForwardOutline, closeOutline, volumeHigh } from 'ionicons/icons'
+import { React, useState } from 'react'
 
 const WordCardBack = ({ word }) => {
 	const UK = new Audio(word.header.audio.UK)
 	const US = new Audio(word.header.audio.US)
+
+	const [isExamplesOpen, setIsExamplesOpen] = useState(new Array(word.definitions.length).fill(false))
 
 	return (
 		<>
@@ -42,23 +44,35 @@ const WordCardBack = ({ word }) => {
 						</IonCardTitle>
 					</IonCardTitle>
 				</IonCardHeader>
-				<IonList style={{ width: '100%' }} className="ion-floating-left">
-					{word.definitions.map(def => {
+				<IonList className="ion-floating-left">
+					{word.definitions.map((def, i) => {
 						return (
-							<IonList>
-								{def.meaning}
-								<IonList>
-									{def.examples.map(example => (
-										<IonItem>
-											<div dangerouslySetInnerHTML={{ __html: example }}></div>
-										</IonItem>
-									))}
-								</IonList>
+							<IonList key={i}>
+								<IonButton
+									type="button"
+									size="small"
+									color={'danger'}
+									onClick={() => {
+										isExamplesOpen[i] = !isExamplesOpen[i]
+										setIsExamplesOpen([...isExamplesOpen])
+									}}
+								>
+									<IonIcon icon={isExamplesOpen[i] ? chevronDownOutline : chevronForwardOutline} slot="start"></IonIcon>
+									{def.meaning}
+								</IonButton>
+								{isExamplesOpen[i] && (
+									<IonList>
+										{def.examples.map((example, i) => (
+											<IonItem key={i} className="ion-margin-start" nonce="">
+												<div dangerouslySetInnerHTML={{ __html: example }}></div>
+											</IonItem>
+										))}
+									</IonList>
+								)}
 							</IonList>
 						)
 					})}
 				</IonList>
-				<IonCardContent className="ion-floating-left">{word.definitions[0].examples[0]}</IonCardContent>
 			</IonCard>
 			<div
 				style={{
