@@ -1,4 +1,4 @@
-import { IonButton, IonCard, IonCardContent, IonCardHeader, IonCardTitle, IonIcon } from '@ionic/react'
+import { IonButton, IonCard, IonCardContent, IonCardHeader, IonCardTitle, IonIcon, IonItem, IonList } from '@ionic/react'
 import { book, checkmarkOutline, closeOutline, volumeHigh } from 'ionicons/icons'
 import { React } from 'react'
 import Firebase from '../api/firebase'
@@ -50,6 +50,22 @@ const WordCardBack = ({ word, parser }) => {
 						</IonCardTitle>
 					</IonCardTitle>
 				</IonCardHeader>
+				<IonList style={{ width: '100%' }} className="ion-floating-left">
+					{word.definitions.map(def => {
+						return (
+							<IonList>
+								{def.meaning}
+								<IonList>
+									{def.examples.map(example => (
+										<IonItem>{parser(example)}</IonItem>
+									))}
+								</IonList>
+							</IonList>
+						)
+					})}
+					<IonItem>Hello</IonItem>
+					<IonItem>World</IonItem>
+				</IonList>
 				<IonCardContent className="ion-floating-left">{word.definitions[0].examples[0]}</IonCardContent>
 			</IonCard>
 			<div

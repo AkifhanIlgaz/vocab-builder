@@ -2,6 +2,24 @@ import { IonButton, IonCard, IonCardContent, IonCardHeader, IonCardTitle, IonIco
 import { book, checkmarkOutline, closeOutline, volumeHigh } from 'ionicons/icons'
 import { React } from 'react'
 
+/**
+ *
+ * @param {string} example
+ * @param {string} word
+ * @returns {string}
+ */
+const findWord = (example, word) => {
+	return example
+		.split(' ')
+		.map(w => {
+			if (w.includes(word)) {
+				return `<span class="cl"> ${w} </span>`
+			}
+			return w
+		})
+		.join(' ')
+}
+
 const WordCardFront = ({ word, parser }) => {
 	const UK = new Audio(word.header.audio.UK)
 	const US = new Audio(word.header.audio.US)
@@ -9,6 +27,7 @@ const WordCardFront = ({ word, parser }) => {
 	return (
 		<>
 			<IonCard className="word-card">
+				Front
 				<IonCardTitle
 					className="ion-padding"
 					style={{
@@ -36,16 +55,13 @@ const WordCardFront = ({ word, parser }) => {
 						</IonButton>
 					</div>
 				</IonCardTitle>
-
 				<IonCardHeader className="ion-text-center">
 					<IonCardTitle>
 						{word.word}
-						<IonCardTitle>
-							({word.header.partOfSpeech}) {word.header.CEFRLevel}
-						</IonCardTitle>
+						<IonCardTitle>({word.header.partOfSpeech})</IonCardTitle>
 					</IonCardTitle>
 				</IonCardHeader>
-				<IonCardContent className="ion-floating-left">{parser.parse(word.definitions[0].examples[0])}</IonCardContent>
+				<IonCardContent className="ion-floating-left">{parser(findWord(word.definitions[0].examples[0], word.word))}</IonCardContent>
 			</IonCard>
 			<div
 				style={{
