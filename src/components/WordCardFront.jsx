@@ -13,14 +13,14 @@ const findWord = (example, word) => {
 		.split(' ')
 		.map(w => {
 			if (w.includes(word)) {
-				return `<span class="cl"> ${w} </span>`
+				return `<span class="cl">${w}</span>`
 			}
 			return w
 		})
 		.join(' ')
 }
 
-const WordCardFront = ({ word, parser }) => {
+const WordCardFront = ({ word }) => {
 	const UK = new Audio(word.header.audio.UK)
 	const US = new Audio(word.header.audio.US)
 
@@ -61,7 +61,9 @@ const WordCardFront = ({ word, parser }) => {
 						<IonCardTitle>({word.header.partOfSpeech})</IonCardTitle>
 					</IonCardTitle>
 				</IonCardHeader>
-				<IonCardContent className="ion-floating-left">{parser(findWord(word.definitions[0].examples[0], word.word))}</IonCardContent>
+				<IonCardContent className="ion-floating-left">
+					<div dangerouslySetInnerHTML={{ __html: findWord(word.definitions[0].examples[0], word.word) }}></div>
+				</IonCardContent>
 			</IonCard>
 			<div
 				style={{

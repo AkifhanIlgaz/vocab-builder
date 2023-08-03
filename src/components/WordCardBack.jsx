@@ -1,15 +1,10 @@
 import { IonButton, IonCard, IonCardContent, IonCardHeader, IonCardTitle, IonIcon, IonItem, IonList } from '@ionic/react'
 import { book, checkmarkOutline, closeOutline, volumeHigh } from 'ionicons/icons'
 import { React } from 'react'
-import Firebase from '../api/firebase'
 
-const WordCardBack = ({ word, parser }) => {
+const WordCardBack = ({ word }) => {
 	const UK = new Audio(word.header.audio.UK)
 	const US = new Audio(word.header.audio.US)
-
-	const fetchData = async () => {
-		const firebase = new Firebase()
-	}
 
 	return (
 		<>
@@ -57,14 +52,14 @@ const WordCardBack = ({ word, parser }) => {
 								{def.meaning}
 								<IonList>
 									{def.examples.map(example => (
-										<IonItem>{parser(example)}</IonItem>
+										<IonItem>
+											<div dangerouslySetInnerHTML={{ __html: example }}></div>
+										</IonItem>
 									))}
 								</IonList>
 							</IonList>
 						)
 					})}
-					<IonItem>Hello</IonItem>
-					<IonItem>World</IonItem>
 				</IonList>
 				<IonCardContent className="ion-floating-left">{word.definitions[0].examples[0]}</IonCardContent>
 			</IonCard>

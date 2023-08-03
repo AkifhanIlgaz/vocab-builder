@@ -25,7 +25,7 @@ export const Home = () => {
 		definitions: [
 			{
 				meaning: 'having the skill, intelligence, opportunity, etc. needed to do something',
-				examples: ['You must be able to speak French for this job.', 'A viral illness left her <span class="cl">barely able</span> to walk.', 'We&#39;re still <span class="cl">able to get</span> visas to come and go from Thailand.', 'I didn&#39;t feel able to disagree with him.', 'Will you be able to come?', 'Are you really <span class="cl">willing and able</span> to do what is necessary?', 'They don&#39;t even seem <span class="cl">able to see</span> what&#39;s good about their ideas.', 'These families are less able to afford a balanced, healthy diet.']
+				examples: ['You must be able to speak French for this job.', 'A viral illness left her <span class="cl"> barely able </span> to walk.', 'We&#39;re still <span class="cl">able to get</span> visas to come and go from Thailand.', 'I didn&#39;t feel able to disagree with him.', 'Will you be able to come?', 'Are you really <span class="cl">willing and able</span> to do what is necessary?', 'They don&#39;t even seem <span class="cl">able to see</span> what&#39;s good about their ideas.', 'These families are less able to afford a balanced, healthy diet.']
 			},
 			{
 				meaning: 'intelligent; good at something',
