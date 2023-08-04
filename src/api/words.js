@@ -139,4 +139,8 @@ export const decrement = index => {
 	return --index
 }
 
+export const ResetIsExamplesOpen = len => {
+	return new Array(len).fill(false)
+}
+
 export default words

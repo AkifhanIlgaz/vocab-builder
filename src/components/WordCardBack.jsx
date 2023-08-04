@@ -1,26 +1,34 @@
 import { IonButton, IonCard, IonCardHeader, IonCardTitle, IonIcon, IonItem, IonList, IonTitle, IonToolbar } from '@ionic/react'
 import { book, checkmarkOutline, chevronDownOutline, chevronForwardOutline, closeOutline, repeatOutline, volumeHigh } from 'ionicons/icons'
-import { React, useState } from 'react'
-import { decrement, increment } from '../api/words'
+import { React } from 'react'
+import { ResetIsExamplesOpen, decrement, increment } from '../api/words'
 
-const WordCardBack = ({ word, index, setIndex, isFront, setIsFront }) => {
+const WordCardBack = ({ word, index, setIndex, isFront, setIsFront, isExamplesOpen, setIsExamplesOpen }) => {
 	const UK = new Audio(word.header.audio.UK)
 	const US = new Audio(word.header.audio.US)
 
-	const [isExamplesOpen, setIsExamplesOpen] = useState(new Array(word.definitions.length).fill(false))
+	const move = action => {
+		action()
+		setIsExamplesOpen(ResetIsExamplesOpen(word.definitions.length))
+	}
+
+	const flip = action => {
+		action()
+		setIsExamplesOpen(ResetIsExamplesOpen(word.definitions.length))
+	}
 
 	return (
 		<>
 			<IonToolbar style={{ marginLeft: '10px' }} color={'transparent'}>
-				<IonButton onClick={() => setIndex(decrement(index))} slot="start">
+				<IonButton onClick={() => move(() => setIndex(decrement(index)))} slot="start">
 					Back
 				</IonButton>
 				<IonTitle className="ion-text-center">
-					<IonButton onClick={() => setIsFront(!isFront)}>
+					<IonButton onClick={() => flip(setIsFront(!isFront))}>
 						<IonIcon icon={repeatOutline}></IonIcon>
 					</IonButton>
 				</IonTitle>
-				<IonButton onClick={() => setIndex(increment(index))} slot="end">
+				<IonButton onClick={() => move(() => setIndex(increment(index)))} slot="end">
 					Next
 				</IonButton>
 			</IonToolbar>
