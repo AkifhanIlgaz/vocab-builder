@@ -1,4 +1,4 @@
-import { IonButton, IonCard, IonCardHeader, IonCardTitle, IonIcon, IonItem, IonList } from '@ionic/react'
+import { IonButton, IonCard, IonCardHeader, IonCardTitle, IonIcon, IonItem, IonList, IonTitle, IonToolbar } from '@ionic/react'
 import { book, checkmarkOutline, chevronDownOutline, chevronForwardOutline, closeOutline, repeatOutline, volumeHigh } from 'ionicons/icons'
 import { React, useState } from 'react'
 import { decrement, increment } from '../api/words'
@@ -11,8 +11,20 @@ const WordCardBack = ({ word, index, setIndex, isFront, setIsFront }) => {
 
 	return (
 		<>
+			<IonToolbar style={{ marginLeft: '10px' }} color={'transparent'}>
+				<IonButton onClick={() => setIndex(decrement(index))} slot="start">
+					Back
+				</IonButton>
+				<IonTitle className="ion-text-center">
+					<IonButton onClick={() => setIsFront(!isFront)}>
+						<IonIcon icon={repeatOutline}></IonIcon>
+					</IonButton>
+				</IonTitle>
+				<IonButton onClick={() => setIndex(increment(index))} slot="end">
+					Next
+				</IonButton>
+			</IonToolbar>
 			<IonCard className="word-card">
-				Back
 				<IonCardTitle
 					className="ion-padding"
 					style={{
@@ -90,11 +102,6 @@ const WordCardBack = ({ word, index, setIndex, isFront, setIsFront }) => {
 					<IonIcon icon={checkmarkOutline}></IonIcon>
 				</IonButton>
 			</div>
-			<IonButton onClick={() => setIsFront(!isFront)}>
-				<IonIcon icon={repeatOutline}></IonIcon>
-			</IonButton>
-			<IonButton onClick={() => setIndex(decrement(index))}>Back</IonButton>
-			<IonButton onClick={() => setIndex(increment(index))}>Next</IonButton>
 		</>
 	)
 }
