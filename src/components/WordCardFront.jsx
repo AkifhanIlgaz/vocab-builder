@@ -1,6 +1,7 @@
 import { IonButton, IonCard, IonCardContent, IonCardHeader, IonCardTitle, IonIcon } from '@ionic/react'
-import { book, checkmarkOutline, closeOutline, volumeHigh } from 'ionicons/icons'
+import { book, checkmarkOutline, closeOutline, repeatOutline, volumeHigh } from 'ionicons/icons'
 import { React } from 'react'
+import { decrement, increment } from '../api/words'
 
 /**
  *
@@ -20,7 +21,7 @@ const findWord = (example, word) => {
 		.join(' ')
 }
 
-const WordCardFront = ({ word }) => {
+const WordCardFront = ({ word, index, setIndex, isFront, setIsFront }) => {
 	const UK = new Audio(word.header.audio.UK)
 	const US = new Audio(word.header.audio.US)
 
@@ -77,6 +78,11 @@ const WordCardFront = ({ word }) => {
 					<IonIcon icon={checkmarkOutline}></IonIcon>
 				</IonButton>
 			</div>
+			<IonButton onClick={() => setIsFront(!isFront)}>
+				<IonIcon icon={repeatOutline}></IonIcon>
+			</IonButton>
+			<IonButton onClick={() => setIndex(decrement(index))}>Back</IonButton>
+			<IonButton onClick={() => setIndex(increment(index))}>Next</IonButton>
 		</>
 	)
 }

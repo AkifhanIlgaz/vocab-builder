@@ -1,3 +1,5 @@
+import { DefaultWordsLength } from './firebase'
+
 const words = [
 	{
 		id: 3,
@@ -119,5 +121,22 @@ const words = [
 		idioms: null
 	}
 ]
+
+export const increment = index => {
+	if (index + 1 == DefaultWordsLength) {
+		// TODO:Get another 10 words
+		// TODO: Set words
+		return index
+	}
+	return ++index
+}
+
+export const decrement = index => {
+	// TODO: Show alert, breadcrumb
+	if (index - 1 === -1) {
+		return index
+	}
+	return --index
+}
 
 export default words

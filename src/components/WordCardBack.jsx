@@ -1,8 +1,9 @@
 import { IonButton, IonCard, IonCardHeader, IonCardTitle, IonIcon, IonItem, IonList } from '@ionic/react'
-import { book, checkmarkOutline, chevronDownOutline, chevronForwardOutline, closeOutline, volumeHigh } from 'ionicons/icons'
+import { book, checkmarkOutline, chevronDownOutline, chevronForwardOutline, closeOutline, repeatOutline, volumeHigh } from 'ionicons/icons'
 import { React, useState } from 'react'
+import { decrement, increment } from '../api/words'
 
-const WordCardBack = ({ word }) => {
+const WordCardBack = ({ word, index, setIndex, isFront, setIsFront }) => {
 	const UK = new Audio(word.header.audio.UK)
 	const US = new Audio(word.header.audio.US)
 
@@ -89,6 +90,11 @@ const WordCardBack = ({ word }) => {
 					<IonIcon icon={checkmarkOutline}></IonIcon>
 				</IonButton>
 			</div>
+			<IonButton onClick={() => setIsFront(!isFront)}>
+				<IonIcon icon={repeatOutline}></IonIcon>
+			</IonButton>
+			<IonButton onClick={() => setIndex(decrement(index))}>Back</IonButton>
+			<IonButton onClick={() => setIndex(increment(index))}>Next</IonButton>
 		</>
 	)
 }

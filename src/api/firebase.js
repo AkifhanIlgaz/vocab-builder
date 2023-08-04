@@ -7,6 +7,7 @@ import firebaseConfig from './firebaseConfig'
 firebase.initializeApp(firebaseConfig)
 
 export const UsersCollection = 'users'
+export const DefaultWordsLength = 10
 
 class Firebase {
 	constructor() {
