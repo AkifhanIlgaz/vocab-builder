@@ -1,5 +1,3 @@
-import { DefaultWordsLength } from './firebase'
-
 const words = [
 	{
 		id: 3,
@@ -123,11 +121,6 @@ const words = [
 ]
 
 export const increment = index => {
-	if (index + 1 == DefaultWordsLength) {
-		// TODO:Get another 10 words
-		// TODO: Set words
-		return index
-	}
 	return ++index
 }
 

@@ -22,6 +22,7 @@ const findWord = (example, word) => {
 }
 
 const WordCardFront = ({ word, index, setIndex, isFront, setIsFront, setIsExamplesOpen }) => {
+	// TODO: Audio => First Child
 	const UK = new Audio(word.header.audio.UK)
 	const US = new Audio(word.header.audio.US)
 
