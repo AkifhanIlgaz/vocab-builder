@@ -59,7 +59,7 @@ const WordCardFront = ({ word }) => {
 					</IonCardTitle>
 				</IonCardHeader>
 				<IonCardContent className="ion-floating-left">
-					<div dangerouslySetInnerHTML={{ __html: findWord(word.definitions[0].examples[0], word.word) }}></div>
+					<div dangerouslySetInnerHTML={{ __html: word.definitions[0].examples[0].includes('span') ? word.definitions[0].examples[0] : findWord(word.definitions[0].examples[0], word.word) }}></div>
 				</IonCardContent>
 			</IonCard>
 			<div
