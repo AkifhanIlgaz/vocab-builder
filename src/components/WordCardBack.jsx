@@ -1,5 +1,5 @@
 import { IonButton, IonCard, IonCardHeader, IonCardTitle, IonIcon, IonItem, IonList, IonTitle, IonToolbar } from '@ionic/react'
-import { book, checkmarkOutline, chevronDownOutline, chevronForwardOutline, closeOutline, repeatOutline, volumeHigh } from 'ionicons/icons'
+import { checkmarkOutline, chevronDownOutline, chevronForwardOutline, closeOutline, informationCircleOutline, repeatOutline, volumeHigh } from 'ionicons/icons'
 import { React } from 'react'
 import { ResetIsExamplesOpen, decrement, increment } from '../api/words'
 
@@ -44,16 +44,16 @@ const WordCardBack = ({ word, index, setIndex, isFront, setIsFront, isExamplesOp
 				>
 					Box: {word.box}
 					<div className="ion-floating-right">
-						<IonButton onClick={() => UK.play()}>
+						<IonButton onClick={() => UK.play()} size="small">
 							UK
-							<IonIcon icon={volumeHigh}></IonIcon>
+							<IonIcon icon={volumeHigh} slot="end"></IonIcon>
 						</IonButton>
-						<IonButton onClick={() => US.play()}>
+						<IonButton color={'danger'} onClick={() => US.play()} size="small">
 							US
-							<IonIcon icon={volumeHigh}></IonIcon>
+							<IonIcon icon={volumeHigh} slot="end"></IonIcon>
 						</IonButton>
-						<IonButton href={word.source} target="_blank" rel="noopener noreferrer">
-							<IonIcon icon={book}></IonIcon>
+						<IonButton color={'warning'} size="small" href={word.source} target="_blank" rel="noopener noreferrer">
+							<IonIcon icon={informationCircleOutline}></IonIcon>
 						</IonButton>
 					</div>
 				</IonCardTitle>

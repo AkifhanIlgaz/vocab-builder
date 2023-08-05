@@ -1,5 +1,5 @@
 import { IonButton, IonCard, IonCardContent, IonCardHeader, IonCardTitle, IonIcon, IonTitle, IonToolbar } from '@ionic/react'
-import { book, checkmarkOutline, closeOutline, repeatOutline, volumeHigh } from 'ionicons/icons'
+import { checkmarkOutline, closeOutline, informationCircleOutline, repeatOutline, volumeHigh } from 'ionicons/icons'
 import { React } from 'react'
 import { ResetIsExamplesOpen, decrement, increment } from '../api/words'
 
@@ -73,7 +73,7 @@ const WordCardFront = ({ word, index, setIndex, isFront, setIsFront, setIsExampl
 							<IonIcon icon={volumeHigh} slot="end"></IonIcon>
 						</IonButton>
 						<IonButton color={'warning'} size="small" href={word.source} target="_blank" rel="noopener noreferrer">
-							<IonIcon icon={book}></IonIcon>
+							<IonIcon icon={informationCircleOutline}></IonIcon>
 						</IonButton>
 					</div>
 				</IonCardTitle>

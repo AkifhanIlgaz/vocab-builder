@@ -29,7 +29,6 @@ export const Home = () => {
 	}, [])
 
 	useEffect(() => {
-		console.log(index)
 		if (index === DefaultWordsLength) {
 			fetchWords()
 			setIndex(0)
