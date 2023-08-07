@@ -1,13 +1,18 @@
-import { IonCol, IonContent, IonGrid, IonPage, IonRow } from '@ionic/react'
+import { IonButton, IonCol, IonContent, IonGrid, IonPage, IonRow } from '@ionic/react'
 
 import axios from 'axios'
 import { React, useEffect, useState } from 'react'
-import { DefaultWordsLength } from '../api/firebase'
+import { useHistory } from 'react-router'
+import { useRecoilState } from 'recoil'
+import Firebase, { DefaultWordsLength } from '../api/firebase'
 import { ResetIsExamplesOpen } from '../api/words'
+import userState from '../atoms/user'
 import WordCardBack from '../components/WordCardBack'
 import WordCardFront from '../components/WordCardFront'
 
 export const Home = () => {
+	const history = useHistory()
+	const [user, setUser] = useRecoilState(userState)
 	const [isFront, setIsFront] = useState(true)
 	const [currentWords, setCurrentWords] = useState([])
 	const [index, setIndex] = useState(0)
@@ -35,6 +40,13 @@ export const Home = () => {
 		}
 	}, [index])
 
+	const signOut = async () => {
+		const firebase = new Firebase()
+		const res = await firebase.signOut()
+		setUser(res)
+		history.push('/signin')
+	}
+
 	return (
 		<IonPage>
 			<IonContent color={'primary'}>
@@ -42,6 +54,7 @@ export const Home = () => {
 					<IonRow className="ion-align-items-center ion-justify-content-center">
 						<IonCol size="10" sizeXl="12" size-sm="4" size-md="6" size-lg="8">
 							{index === DefaultWordsLength || currentWords.length == 0 ? 'Loading' : isFront ? <WordCardFront word={currentWords[index]} index={index} setIndex={setIndex} isFront={isFront} setIsFront={setIsFront} setIsExamplesOpen={setIsExamplesOpen} /> : <WordCardBack word={currentWords[index]} index={index} setIndex={setIndex} isFront={isFront} setIsFront={setIsFront} isExamplesOpen={isExamplesOpen} setIsExamplesOpen={setIsExamplesOpen} />}
+							<IonButton onClick={signOut}>Signout</IonButton>
 						</IonCol>
 					</IonRow>
 				</IonGrid>
