@@ -34,7 +34,8 @@ class Firebase {
 				const user = userCredential.user
 				const userDocRef = this.firestore.collection(UsersCollection).doc(user.uid)
 				const userDocSnapshot = await userDocRef.get()
-				userData = { uid: user.uid, createdAt: user.metadata.createdAt, creationTime: user.metadata.creationTime, lastLoginAt: user.metadata.lastLoginAt, lastSignInTime: user.metadata.lastSignInTime, displayName: user.displayName, email: user.email, phoneNumber: user.phoneNumber, photoURL: user.photoURL, providerId: user.providerId, ...userData }
+				const idToken = await user.getIdToken(true)
+				userData = { uid: user.uid, token: idToken, createdAt: user.metadata.createdAt, creationTime: user.metadata.creationTime, lastLoginAt: user.metadata.lastLoginAt, lastSignInTime: user.metadata.lastSignInTime, displayName: user.displayName, email: user.email, phoneNumber: user.phoneNumber, photoURL: user.photoURL, providerId: user.providerId, ...userData }
 				if (userDocSnapshot.exists) {
 					await this.setDocument(UsersCollection, user.uid, { ...userDocSnapshot.data(), ...userData })
 					return { ...userDocSnapshot.data(), ...userData }
@@ -57,7 +58,8 @@ class Firebase {
 				const userDocRef = this.firestore.collection(UsersCollection).doc(user.uid)
 
 				const userDocSnapshot = await userDocRef.get()
-				const userData = { uid: user.uid, createdAt: user.metadata.createdAt, creationTime: user.metadata.creationTime, lastLoginAt: user.metadata.lastLoginAt, lastSignInTime: user.metadata.lastSignInTime, displayName: user.displayName, email: user.email, phoneNumber: user.phoneNumber, providerId: user.providerId }
+				const idToken = await user.getIdToken(true)
+				const userData = { uid: user.uid, token: idToken, createdAt: user.metadata.createdAt, creationTime: user.metadata.creationTime, lastLoginAt: user.metadata.lastLoginAt, lastSignInTime: user.metadata.lastSignInTime, displayName: user.displayName, email: user.email, phoneNumber: user.phoneNumber, providerId: user.providerId }
 				if (userDocSnapshot.exists) {
 					await this.setDocument(UsersCollection, user.uid, { ...userDocSnapshot.data(), ...userData })
 					return { ...userDocSnapshot.data(), ...userData }
