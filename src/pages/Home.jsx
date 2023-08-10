@@ -16,6 +16,7 @@ export const Home = () => {
 	const [isFront, setIsFront] = useState(true)
 	const [currentWords, setCurrentWords] = useState([])
 	const [index, setIndex] = useState(0)
+	const firebase = new Firebase()
 
 	const url = 'http://localhost:3000/words/random'
 	const [isExamplesOpen, setIsExamplesOpen] = useState(ResetIsExamplesOpen(currentWords[index]))
@@ -23,6 +24,7 @@ export const Home = () => {
 	const fetchWords = async () => {
 		try {
 			const res = await axios.get(url)
+
 			setCurrentWords(res.data)
 		} catch (error) {
 			console.log(error)
@@ -40,8 +42,12 @@ export const Home = () => {
 		}
 	}, [index])
 
+	const sendVerifyToken = async () => {
+		const idToken = await firebase.auth.currentUser.getIdToken(true)
+		console.log(idToken)
+	}
+
 	const signOut = async () => {
-		const firebase = new Firebase()
 		const res = await firebase.signOut()
 		setUser(res)
 		history.push('/signin')
@@ -55,6 +61,7 @@ export const Home = () => {
 						<IonCol size="10" sizeXl="12" size-sm="4" size-md="6" size-lg="8">
 							{index === DefaultWordsLength || currentWords.length == 0 ? 'Loading' : isFront ? <WordCardFront word={currentWords[index]} index={index} setIndex={setIndex} isFront={isFront} setIsFront={setIsFront} setIsExamplesOpen={setIsExamplesOpen} /> : <WordCardBack word={currentWords[index]} index={index} setIndex={setIndex} isFront={isFront} setIsFront={setIsFront} isExamplesOpen={isExamplesOpen} setIsExamplesOpen={setIsExamplesOpen} />}
 							<IonButton onClick={signOut}>Signout</IonButton>
+							<IonButton onClick={sendVerifyToken}>Send Verify Token</IonButton>
 						</IonCol>
 					</IonRow>
 				</IonGrid>
