@@ -14,47 +14,40 @@ class Firebase {
 		this.auth = firebase.auth()
 		this.googleProvider = new firebase.auth.GoogleAuthProvider()
 		this.twitterProvider = new firebase.auth.TwitterAuthProvider()
+		this.facebookProvider = new firebase.auth.FacebookAuthProvider()
 		this.firestore = firebase.firestore()
 		this.storage = firebase.storage()
 	}
 
-	async signInWithTwitterPopup() {
-		const res = await this.auth.signInWithPopup(this.twitterProvider)
-		const credential = res.credential
-		const user = res.user
-		console.log('credential ', credential.toJSON())
-		console.log('user ', user)
+	async signInWithThirdPartyProvider(provider) {
+		try {
+			const res = await this.auth.signInWithPopup(provider)
+			const userData = await this.insertUser(res.user)
+			return userData
+		} catch (error) {
+			throw error
+		}
 	}
 
-	async signInWithTwitterRedirect() {
-		const res = await this.auth.signInWithPopup(this.twitterProvider)
-		const credential = res.credential
-		const user = res.user
-		console.log('credential ', credential.toJSON())
-		console.log('user ', user)
-	}
-
-	async signInWithGooglePopup() {
-		const res = await this.auth.signInWithPopup(this.googleProvider)
-		const credential = res.credential
-		const user = res.user
-		console.log('credential ', credential.toJSON())
-		console.log('user ', user)
-	}
-
-	async signInWithGoogleRedirect() {
-		const res = await this.auth.signInWithPopup(this.googleProvider)
-		const credential = res.credential
-		const user = res.user
-		console.log('credential ', credential.toJSON())
-		console.log('user ', user)
+	async insertUser(userData) {
+		try {
+			const userDoc = await this.firestore.collection(UsersCollection).doc(userData.uid).get()
+			userData = { uid: userData.uid, createdAt: userData.metadata.createdAt, creationTime: userData.metadata.creationTime, lastLoginAt: userData.metadata.lastLoginAt, lastSignInTime: userData.metadata.lastSignInTime, displayName: userData.displayName, email: userData.email, providerId: userData.providerId }
+			if (userDoc.exists) {
+				await this.setDocument(UsersCollection, userData.uid, { ...userDoc.data(), ...userData })
+				return { ...userDoc.data(), ...userData }
+			} else {
+				await this.setDocument(UsersCollection, userData.uid, userData)
+				return userData
+			}
+		} catch (error) {
+			throw error
+		}
 	}
 
 	async checkUserExistsByEMail(email) {
 		try {
 			const userCredential = await this.auth.fetchSignInMethodsForEmail(email)
-			
-			this.auth.signInWithPopup
 			return userCredential.length > 0
 		} catch (error) {
 			throw error
@@ -68,18 +61,8 @@ class Firebase {
 				return false
 			} else {
 				const userCredential = await this.auth.createUserWithEmailAndPassword(email, password)
-				const user = userCredential.user
-				const userDocRef = this.firestore.collection(UsersCollection).doc(user.uid)
-				const userDocSnapshot = await userDocRef.get()
-				const idToken = await user.getIdToken(true)
-				userData = { uid: user.uid, token: idToken, createdAt: user.metadata.createdAt, creationTime: user.metadata.creationTime, lastLoginAt: user.metadata.lastLoginAt, lastSignInTime: user.metadata.lastSignInTime, displayName: user.displayName, email: user.email, phoneNumber: user.phoneNumber, photoURL: user.photoURL, providerId: user.providerId, ...userData }
-				if (userDocSnapshot.exists) {
-					await this.setDocument(UsersCollection, user.uid, { ...userDocSnapshot.data(), ...userData })
-					return { ...userDocSnapshot.data(), ...userData }
-				} else {
-					await this.setDocument(UsersCollection, user.uid, userData)
-					return userData
-				}
+				userData = await this.insertUser({ ...userData, ...userCredential.user })
+				return userData
 			}
 		} catch (error) {
 			throw error
@@ -91,19 +74,8 @@ class Firebase {
 			const userExists = await this.checkUserExistsByEMail(email)
 			if (userExists) {
 				const userCredential = await this.auth.signInWithEmailAndPassword(email, password)
-				const user = userCredential.user
-				const userDocRef = this.firestore.collection(UsersCollection).doc(user.uid)
-
-				const userDocSnapshot = await userDocRef.get()
-				const idToken = await user.getIdToken(true)
-				const userData = { uid: user.uid, token: idToken, createdAt: user.metadata.createdAt, creationTime: user.metadata.creationTime, lastLoginAt: user.metadata.lastLoginAt, lastSignInTime: user.metadata.lastSignInTime, displayName: user.displayName, email: user.email, phoneNumber: user.phoneNumber, providerId: user.providerId }
-				if (userDocSnapshot.exists) {
-					await this.setDocument(UsersCollection, user.uid, { ...userDocSnapshot.data(), ...userData })
-					return { ...userDocSnapshot.data(), ...userData }
-				} else {
-					await this.setDocument(UsersCollection, user.uid, userData)
-					return userData
-				}
+				const userData = await this.insertUser(userCredential.user)
+				return userData
 			} else {
 				return false
 			}

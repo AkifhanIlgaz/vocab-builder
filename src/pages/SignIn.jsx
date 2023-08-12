@@ -1,5 +1,5 @@
 import { IonButton, IonCardContent, IonCol, IonIcon, IonInput, IonLabel, IonRow } from '@ionic/react'
-import { logInOutline } from 'ionicons/icons'
+import { logInOutline, logoFacebook, logoGoogle, logoTwitter } from 'ionicons/icons'
 import { React } from 'react'
 import { useForm } from 'react-hook-form'
 import { useHistory } from 'react-router-dom'
@@ -11,7 +11,7 @@ import FormWrapper from '../layouts/FormWrapper'
 export const SignIn = () => {
 	const history = useHistory()
 	const [, setUser] = useRecoilState(userState)
-
+	const firebase = new Firebase()
 	const {
 		register,
 		handleSubmit,
@@ -19,7 +19,6 @@ export const SignIn = () => {
 	} = useForm()
 
 	const onSubmit = async data => {
-		const firebase = new Firebase()
 		try {
 			const res = await firebase.signInWithEmail(data.email, data.password)
 			if (res === false) {
@@ -34,14 +33,14 @@ export const SignIn = () => {
 		}
 	}
 
-	const signInWithGoogle = async () => {
-		const firebase = new Firebase()
-		await firebase.signInWithGooglePopup()
-	}
-
-	const signInWithTwitter = async () => {
-		const firebase = new Firebase()
-		await firebase.signInWithTwitterPopup()
+	const signInWithProvider = async provider => {
+		try {
+			const res = await firebase.signInWithThirdPartyProvider(provider)
+			setUser(res)
+			history.push('/home')
+		} catch (error) {
+			console.log(error)
+		}
 	}
 
 	return (
@@ -78,9 +77,18 @@ export const SignIn = () => {
 							Don't have an account ?
 						</a>
 					</IonCol>
-					<IonButton onClick={signInWithGoogle}>Google</IonButton>
-					<IonButton onClick={signInWithTwitter}>Twitter</IonButton>
 				</IonRow>
+				<div className="ion-text-center">
+					<IonButton onClick={() => signInWithProvider(firebase.googleProvider)}>
+						<IonIcon icon={logoGoogle}></IonIcon>
+					</IonButton>
+					<IonButton onClick={() => signInWithProvider(firebase.twitterProvider)}>
+						<IonIcon icon={logoTwitter}></IonIcon>
+					</IonButton>
+					<IonButton onClick={() => signInWithProvider(firebase.facebookProvider)}>
+						<IonIcon icon={logoFacebook}></IonIcon>
+					</IonButton>
+				</div>
 			</IonCardContent>
 		</FormWrapper>
 	)
