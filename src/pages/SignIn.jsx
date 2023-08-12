@@ -34,6 +34,16 @@ export const SignIn = () => {
 		}
 	}
 
+	const signInWithGoogle = async () => {
+		const firebase = new Firebase()
+		await firebase.signInWithGooglePopup()
+	}
+
+	const signInWithTwitter = async () => {
+		const firebase = new Firebase()
+		await firebase.signInWithTwitterPopup()
+	}
+
 	return (
 		<FormWrapper onSubmit={handleSubmit(onSubmit)}>
 			<IonCardContent className="card-content">
@@ -68,6 +78,8 @@ export const SignIn = () => {
 							Don't have an account ?
 						</a>
 					</IonCol>
+					<IonButton onClick={signInWithGoogle}>Google</IonButton>
+					<IonButton onClick={signInWithTwitter}>Twitter</IonButton>
 				</IonRow>
 			</IonCardContent>
 		</FormWrapper>

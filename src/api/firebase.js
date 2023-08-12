@@ -12,12 +12,49 @@ export const DefaultWordsLength = 10
 class Firebase {
 	constructor() {
 		this.auth = firebase.auth()
+		this.googleProvider = new firebase.auth.GoogleAuthProvider()
+		this.twitterProvider = new firebase.auth.TwitterAuthProvider()
 		this.firestore = firebase.firestore()
 		this.storage = firebase.storage()
 	}
+
+	async signInWithTwitterPopup() {
+		const res = await this.auth.signInWithPopup(this.twitterProvider)
+		const credential = res.credential
+		const user = res.user
+		console.log('credential ', credential.toJSON())
+		console.log('user ', user)
+	}
+
+	async signInWithTwitterRedirect() {
+		const res = await this.auth.signInWithPopup(this.twitterProvider)
+		const credential = res.credential
+		const user = res.user
+		console.log('credential ', credential.toJSON())
+		console.log('user ', user)
+	}
+
+	async signInWithGooglePopup() {
+		const res = await this.auth.signInWithPopup(this.googleProvider)
+		const credential = res.credential
+		const user = res.user
+		console.log('credential ', credential.toJSON())
+		console.log('user ', user)
+	}
+
+	async signInWithGoogleRedirect() {
+		const res = await this.auth.signInWithPopup(this.googleProvider)
+		const credential = res.credential
+		const user = res.user
+		console.log('credential ', credential.toJSON())
+		console.log('user ', user)
+	}
+
 	async checkUserExistsByEMail(email) {
 		try {
 			const userCredential = await this.auth.fetchSignInMethodsForEmail(email)
+			
+			this.auth.signInWithPopup
 			return userCredential.length > 0
 		} catch (error) {
 			throw error
