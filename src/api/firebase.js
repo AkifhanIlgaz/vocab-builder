@@ -12,7 +12,9 @@ export const DefaultWordsLength = 10
 class Firebase {
 	constructor() {
 		this.auth = firebase.auth()
-		this.googleProvider = new firebase.auth.GoogleAuthProvider()
+		this.googleProvider = new firebase.auth.GoogleAuthProvider().setCustomParameters({
+			prompt: 'select_account'
+		})
 		this.twitterProvider = new firebase.auth.TwitterAuthProvider()
 		this.facebookProvider = new firebase.auth.FacebookAuthProvider()
 		this.firestore = firebase.firestore()
@@ -22,17 +24,18 @@ class Firebase {
 	async signInWithThirdPartyProvider(provider) {
 		try {
 			const res = await this.auth.signInWithPopup(provider)
-			const userData = await this.insertUser(res.user)
+			const userData = await this.insertUser(res.user, res.additionalUserInfo.providerId)
 			return userData
 		} catch (error) {
 			throw error
 		}
 	}
 
-	async insertUser(userData) {
+	async insertUser(userData, providerId) {
 		try {
+			userData = userData.multiFactor.user
 			const userDoc = await this.firestore.collection(UsersCollection).doc(userData.uid).get()
-			userData = { uid: userData.uid, createdAt: userData.metadata.createdAt, creationTime: userData.metadata.creationTime, lastLoginAt: userData.metadata.lastLoginAt, lastSignInTime: userData.metadata.lastSignInTime, displayName: userData.displayName, email: userData.email, providerId: userData.providerId }
+			userData = { uid: userData.uid, createdAt: userData.metadata.createdAt, creationTime: userData.metadata.creationTime, lastLoginAt: userData.metadata.lastLoginAt, lastSignInTime: userData.metadata.lastSignInTime, displayName: userData.displayName, email: userData.email, providerId: providerId }
 			if (userDoc.exists) {
 				await this.setDocument(UsersCollection, userData.uid, { ...userDoc.data(), ...userData })
 				return { ...userDoc.data(), ...userData }
