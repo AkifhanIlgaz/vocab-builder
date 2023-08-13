@@ -64,7 +64,7 @@ class Firebase {
 				return false
 			} else {
 				const userCredential = await this.auth.createUserWithEmailAndPassword(email, password)
-				userData = await this.insertUser({ ...userData, ...userCredential.user })
+				userData = await this.insertUser({ ...userData, ...userCredential.user }, userCredential.user.providerId)
 				return userData
 			}
 		} catch (error) {
