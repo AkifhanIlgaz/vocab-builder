@@ -7,7 +7,7 @@ import firebaseConfig from './firebaseConfig'
 firebase.initializeApp(firebaseConfig)
 
 export const UsersCollection = 'users'
-export const DefaultWordsLength = 10
+export const DefaultWordsLength = 15
 
 export function addIdToken(url, token) {
 	return `${url}?token=${encodeURIComponent(token)}`

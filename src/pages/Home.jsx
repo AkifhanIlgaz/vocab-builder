@@ -18,13 +18,14 @@ export const Home = () => {
 	const [index, setIndex] = useState(0)
 	const [isExamplesOpen, setIsExamplesOpen] = useState(ResetIsExamplesOpen(currentWords[index]))
 	const firebase = new Firebase()
-	const url = 'http://localhost:3000/idtoken'
+	const url = 'http://localhost:3000/box/today'
 
 	const fetchWords = async () => {
 		try {
 			firebase.auth.onAuthStateChanged(async user => {
 				const idToken = await user.getIdToken(true)
 				const urlWithIdToken = addIdToken(url, idToken)
+				console.log(urlWithIdToken)
 				const res = await axios.get(urlWithIdToken)
 				setCurrentWords(res.data)
 			})
