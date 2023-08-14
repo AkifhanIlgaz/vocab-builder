@@ -22,12 +22,12 @@ export const Home = () => {
 
 	const fetchWords = async () => {
 		try {
-			const currentUser = await firebase.getCurrentUser()
-			const idToken = await currentUser.getIdToken(true)
-			console.log(idToken)
-			const urlWithIdToken = addIdToken(url, idToken)
-			const res = await axios.get(urlWithIdToken)
-			setCurrentWords(res.data)
+			firebase.auth.onAuthStateChanged(async user => {
+				const idToken = await user.getIdToken(true)
+				const urlWithIdToken = addIdToken(url, idToken)
+				const res = await axios.get(urlWithIdToken)
+				setCurrentWords(res.data)
+			})
 		} catch (error) {
 			console.log(error)
 		}
