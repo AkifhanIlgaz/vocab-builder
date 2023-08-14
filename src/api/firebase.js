@@ -28,8 +28,7 @@ class Firebase {
 	async signInWithThirdPartyProvider(provider) {
 		try {
 			const res = await this.auth.signInWithPopup(provider)
-			const userData = await this.insertUser(res.user, res.additionalUserInfo.providerId)
-			return userData
+			return await this.insertUser(res.user, res.additionalUserInfo.providerId)
 		} catch (error) {
 			throw error
 		}
