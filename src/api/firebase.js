@@ -9,6 +9,10 @@ firebase.initializeApp(firebaseConfig)
 export const UsersCollection = 'users'
 export const DefaultWordsLength = 10
 
+export function addIdToken(url, token) {
+	return `${url}?token=${encodeURIComponent(token)}`
+}
+
 class Firebase {
 	constructor() {
 		this.auth = firebase.auth()
@@ -24,8 +28,8 @@ class Firebase {
 	async signInWithThirdPartyProvider(provider) {
 		try {
 			const res = await this.auth.signInWithPopup(provider)
-			const userData = await this.insertUser(res.user, res.additionalUserInfo.providerId)
-			return userData
+			// const userData = await this.insertUser(res.user, res.additionalUserInfo.providerId)
+			return res
 		} catch (error) {
 			throw error
 		}

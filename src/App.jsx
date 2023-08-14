@@ -66,7 +66,7 @@ const App = () => {
 							<Route exact path="/reset-password">
 								<ResetPassword />
 							</Route>
-							<Route exact path="/">
+							<Route path="/">
 								<Redirect to="/signin"></Redirect>
 							</Route>
 						</>

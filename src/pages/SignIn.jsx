@@ -37,6 +37,7 @@ export const SignIn = () => {
 		try {
 			const res = await firebase.signInWithThirdPartyProvider(provider)
 			setUser(res)
+			console.log(res)
 			history.push('/home')
 		} catch (error) {
 			console.log(error)
