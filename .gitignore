@@ -28,5 +28,4 @@ yarn-error.log*
 # Optional eslint cache
 .eslintcache
 
-
-firebaseConfig.js
+src/api/firebaseConfig.js
