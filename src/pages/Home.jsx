@@ -4,7 +4,7 @@ import axios from 'axios'
 import { React, useEffect, useState } from 'react'
 import { useHistory } from 'react-router'
 import { useRecoilState } from 'recoil'
-import Firebase, { DefaultWordsLength, addIdToken } from '../api/firebase'
+import Firebase, { DefaultWordsLength, addIdToken, getCurrentUser } from '../api/firebase'
 import { ResetIsExamplesOpen } from '../api/words'
 import userState from '../atoms/user'
 import WordCardBack from '../components/WordCardBack'
@@ -16,16 +16,16 @@ export const Home = () => {
 	const [isFront, setIsFront] = useState(true)
 	const [currentWords, setCurrentWords] = useState([])
 	const [index, setIndex] = useState(0)
-	const firebase = new Firebase()
-
-	const url = 'http://localhost:3000/box/today'
-
 	const [isExamplesOpen, setIsExamplesOpen] = useState(ResetIsExamplesOpen(currentWords[index]))
+	const firebase = new Firebase()
+	const url = 'http://localhost:3000/idtoken'
 
 	const fetchWords = async () => {
 		try {
-			const idToken = await firebase.auth.currentUser.getIdToken(true)
+			const currentUser = await getCurrentUser()
+			const idToken = await currentUser.getIdToken(true)
 			const urlWithIdToken = addIdToken(url, idToken)
+			console.log(urlWithIdToken)
 			const res = await axios.get(urlWithIdToken)
 			setCurrentWords(res.data)
 		} catch (error) {

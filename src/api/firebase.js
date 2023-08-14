@@ -13,6 +13,15 @@ export function addIdToken(url, token) {
 	return `${url}?token=${encodeURIComponent(token)}`
 }
 
+export function getCurrentUser() {
+	return new Promise((resolve, reject) => {
+		const unsubscribe = firebase.auth().onAuthStateChanged(user => {
+			unsubscribe()
+			resolve(user)
+		}, reject)
+	})
+}
+
 class Firebase {
 	constructor() {
 		this.auth = firebase.auth()
@@ -28,8 +37,8 @@ class Firebase {
 	async signInWithThirdPartyProvider(provider) {
 		try {
 			const res = await this.auth.signInWithPopup(provider)
-			// const userData = await this.insertUser(res.user, res.additionalUserInfo.providerId)
-			return res
+			const userData = await this.insertUser(res.user, res.additionalUserInfo.providerId)
+			return userData
 		} catch (error) {
 			throw error
 		}
