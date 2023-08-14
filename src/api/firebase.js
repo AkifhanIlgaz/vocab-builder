@@ -13,15 +13,6 @@ export function addIdToken(url, token) {
 	return `${url}?token=${encodeURIComponent(token)}`
 }
 
-export function getCurrentUser() {
-	return new Promise((resolve, reject) => {
-		const unsubscribe = firebase.auth().onAuthStateChanged(user => {
-			unsubscribe()
-			resolve(user)
-		}, reject)
-	})
-}
-
 class Firebase {
 	constructor() {
 		this.auth = firebase.auth()
@@ -42,6 +33,15 @@ class Firebase {
 		} catch (error) {
 			throw error
 		}
+	}
+
+	getCurrentUser() {
+		return new Promise((resolve, reject) => {
+			const unsubscribe = firebase.auth().onAuthStateChanged(user => {
+				unsubscribe()
+				resolve(user)
+			}, reject)
+		})
 	}
 
 	async insertUser(userData, providerId) {
