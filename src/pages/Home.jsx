@@ -25,7 +25,6 @@ export const Home = () => {
 			firebase.auth.onAuthStateChanged(async user => {
 				const idToken = await user.getIdToken(true)
 				const urlWithIdToken = addIdToken(url, idToken)
-				console.log(urlWithIdToken)
 				const res = await axios.get(urlWithIdToken)
 				setCurrentWords(res.data)
 			})
