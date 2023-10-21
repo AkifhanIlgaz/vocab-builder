@@ -44,6 +44,12 @@ export const SignIn = () => {
 		}
 	}
 
+	const signInWithGoogle = async () => {
+		const res = await fetch(`http://localhost:3000/auth/signin/google`)
+
+		console.log(res)
+	}
+
 	return (
 		<FormWrapper onSubmit={handleSubmit(onSubmit)}>
 			<IonCardContent className="card-content">
@@ -89,6 +95,9 @@ export const SignIn = () => {
 					<IonButton onClick={() => signInWithProvider(firebase.facebookProvider)}>
 						<IonIcon icon={logoFacebook}></IonIcon>
 					</IonButton>
+					<IonButton onClick={() => signInWithGoogle()}>Sign In with Google</IonButton>
+
+					<a href="https://accounts.google.com/o/oauth2/auth?access_type=offline&client_id=803945102379-12m1av8bl6q4grsssa5tljbqictod5q4.apps.googleusercontent.com&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fauth%2Fsignin%2Fgoogle%2Fcallback&response_type=code&scope=email&state=LiB4q2E8uVk7x6_OmmQR5iRAY_SHCWixR_K50tltSqc%3D">xxx</a>
 				</div>
 			</IonCardContent>
 		</FormWrapper>
