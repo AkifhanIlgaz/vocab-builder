@@ -3,13 +3,12 @@ import { personCircleOutline } from 'ionicons/icons'
 import { useForm } from 'react-hook-form'
 import { useHistory } from 'react-router-dom'
 import { useRecoilState } from 'recoil'
-import Firebase from '../api/firebase'
-import userState from '../atoms/user'
+import { authState } from '../atoms/auth'
 import FormWrapper from '../layouts/FormWrapper'
 
 export const SignUp = () => {
 	const history = useHistory()
-	const [user, setUser] = useRecoilState(userState)
+	const [auth, setAuth] = useRecoilState(authState)
 
 	const {
 		register,
@@ -18,14 +17,13 @@ export const SignUp = () => {
 	} = useForm()
 
 	const onSubmit = async data => {
-		const firebase = new Firebase()
 		try {
-			const res = await firebase.signUpWithEmail(data.email, data.password)
-			if (res === false) {
-				alert('Error', 'Email is already taken')
-				return
-			}
-			setUser(res)
+			const res = await fetch('http://localhost:3000/auth/signup', {
+				method: 'POST',
+				body: JSON.stringify(data)
+			})
+
+			setAuth(await res.json())
 			history.push('/home')
 		} catch (error) {
 			console.log(error)

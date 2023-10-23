@@ -22,25 +22,26 @@ import '@ionic/react/css/text-transformation.css'
 import './theme/style.scss'
 import './theme/variables.css'
 
-import { useRecoilState } from 'recoil'
-import userState from './atoms/user'
+import { useRecoilValue } from 'recoil'
+import { authState } from './atoms/auth'
 import ForgotPassword from './pages/ForgotPassword'
 import Home from './pages/Home'
 import Profile from './pages/Profile'
 import ResetPassword from './pages/Reset-Password'
 import { SignIn } from './pages/SignIn'
 import SignUp from './pages/SignUp'
+import Test from './pages/Test'
 
 setupIonicReact()
 
 const App = () => {
-	const [user] = useRecoilState(userState)
+	const auth = useRecoilValue(authState)
 
 	return (
 		<IonApp>
 			<IonReactRouter>
 				<IonRouterOutlet>
-					{user ? (
+					{auth ? (
 						<>
 							<Route path={['/', '/signin', '/signup', '/password-reset']} exact={true}>
 								<Redirect to="/home"></Redirect>
@@ -71,6 +72,9 @@ const App = () => {
 							</Route>
 						</>
 					)}
+					<Route path={'/test'}>
+						<Test />
+					</Route>
 				</IonRouterOutlet>
 			</IonReactRouter>
 		</IonApp>
