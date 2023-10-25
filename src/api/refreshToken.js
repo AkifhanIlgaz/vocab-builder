@@ -8,7 +8,7 @@ const refreshAccessToken = async () => {
 	const res = await fetch(
 		`${base}${refresh}?` +
 			new URLSearchParams({
-				refresh_token: auth.refreshToken
+				refresh_token: auth.refresh_token
 			})
 	)
 

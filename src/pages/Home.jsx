@@ -22,14 +22,17 @@ export const Home = () => {
 
 	const fetchWords = async () => {
 		try {
-			const res = await fetch(url, { headers: { Authorization: `Bearer ${auth.accessToken}` } })
-			if (res.statusText == 'Invalid token') {
+			const res = await fetch(url, { headers: { Authorization: `Bearer ${auth.access_token}` } })
+
+			if (res.statusText === 'Invalid token') {
 				await refreshAccessToken()
-				fetchWords()
 				// TODO: Refresh access token and retry
 			}
 
-			setCurrentWords(await res.json())
+			const w = await res.json()
+			console.log(w)
+
+			setCurrentWords(w)
 		} catch (error) {
 			console.log(error)
 		}
@@ -50,7 +53,7 @@ export const Home = () => {
 		const res = await fetch(`${base}${signOutUrl}`, {
 			method: 'POST',
 			headers: {
-				Authorization: `Bearer ${auth.accessToken}`
+				Authorization: `Bearer ${auth.access_token}`
 			}
 		})
 

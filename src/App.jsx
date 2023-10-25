@@ -30,7 +30,7 @@ import Profile from './pages/Profile'
 import ResetPassword from './pages/Reset-Password'
 import { SignIn } from './pages/SignIn'
 import SignUp from './pages/SignUp'
-import Test from './pages/Test'
+import SocialLogin from './pages/SocialLogin'
 
 setupIonicReact()
 
@@ -70,11 +70,11 @@ const App = () => {
 							<Route path="/">
 								<Redirect to="/signin"></Redirect>
 							</Route>
+							<Route path="/social-login">
+								<SocialLogin />
+							</Route>
 						</>
 					)}
-					<Route path={'/test'}>
-						<Test />
-					</Route>
 				</IonRouterOutlet>
 			</IonReactRouter>
 		</IonApp>
