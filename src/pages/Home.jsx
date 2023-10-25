@@ -1,33 +1,35 @@
 import { IonButton, IonCol, IonContent, IonGrid, IonPage, IonRow } from '@ionic/react'
 
-import axios from 'axios'
 import { React, useEffect, useState } from 'react'
 import { useHistory } from 'react-router'
 import { useRecoilState } from 'recoil'
-import Firebase, { DefaultWordsLength, addIdToken } from '../api/firebase'
+import { base, signOutUrl } from '../api/endpoints'
+import { DefaultWordsLength } from '../api/firebase'
+import refreshAccessToken from '../api/refreshToken'
 import { ResetIsExamplesOpen } from '../api/words'
-import userState from '../atoms/user'
+import authState from '../atoms/auth'
 import WordCardBack from '../components/WordCardBack'
 import WordCardFront from '../components/WordCardFront'
 
 export const Home = () => {
 	const history = useHistory()
-	const [user, setUser] = useRecoilState(userState)
+	const [auth, setAuth] = useRecoilState(authState)
 	const [isFront, setIsFront] = useState(true)
 	const [currentWords, setCurrentWords] = useState([])
 	const [index, setIndex] = useState(0)
 	const [isExamplesOpen, setIsExamplesOpen] = useState(ResetIsExamplesOpen(currentWords[index]))
-	const firebase = new Firebase()
 	const url = 'http://localhost:3000/box/today'
 
 	const fetchWords = async () => {
 		try {
-			firebase.auth.onAuthStateChanged(async user => {
-				const idToken = await user.getIdToken(true)
-				const urlWithIdToken = addIdToken(url, idToken)
-				const res = await axios.get(urlWithIdToken)
-				setCurrentWords(res.data)
-			})
+			const res = await fetch(url, { headers: { Authorization: `Bearer ${auth.accessToken}` } })
+			if (res.statusText == 'Invalid token') {
+				await refreshAccessToken()
+				fetchWords()
+				// TODO: Refresh access token and retry
+			}
+
+			setCurrentWords(await res.json())
 		} catch (error) {
 			console.log(error)
 		}
@@ -45,9 +47,22 @@ export const Home = () => {
 	}, [index])
 
 	const signOut = async () => {
-		const res = await firebase.signOut()
-		setUser(res)
-		history.push('/signin')
+		const res = await fetch(`${base}${signOutUrl}`, {
+			method: 'POST',
+			headers: {
+				Authorization: `Bearer ${auth.accessToken}`
+			}
+		})
+
+		if (res.statusText == 'Invalid token') {
+			await refreshAccessToken()
+			// TODO: Refresh access token and retry
+		}
+
+		if (res.ok) {
+			setAuth()
+			history.push('/signin')
+		}
 	}
 
 	return (

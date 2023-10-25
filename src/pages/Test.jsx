@@ -1,6 +1,6 @@
 import { IonContent, IonPage } from '@ionic/react'
 import { useRecoilValue } from 'recoil'
-import refreshAccessToken from '../api/req'
+import refreshAccessToken from '../api/refreshToken'
 import authState from '../atoms/auth'
 
 const Test = () => {

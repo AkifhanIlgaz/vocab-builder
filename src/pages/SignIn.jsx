@@ -24,8 +24,12 @@ export const SignIn = () => {
 				body: JSON.stringify(data)
 			})
 
-			setAuth(await res.json())
-			history.push('/home')
+			console.log(res)
+
+			if (res.ok) {
+				setAuth(await res.json())
+				history.push('/home')
+			}
 		} catch (error) {
 			console.log(error)
 		}
