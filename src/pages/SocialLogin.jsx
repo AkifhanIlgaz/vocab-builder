@@ -9,7 +9,7 @@ const SocialLogin = () => {
 
 	const tokenInfo = params.get('info')
 	if (tokenInfo !== null) {
-		setAuth(JSON.parse(tokenInfo))
+		setAuth({ provider: 'google', ...JSON.parse(tokenInfo) })
 		history.push('/home')
 	} else {
 		history.push('/signin')

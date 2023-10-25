@@ -27,7 +27,7 @@ export const SignIn = () => {
 			console.log(res)
 
 			if (res.ok) {
-				setAuth(await res.json())
+				setAuth({ provider: 'email', ...(await res.json()) })
 				history.push('/home')
 			}
 		} catch (error) {

@@ -24,7 +24,7 @@ export const SignUp = () => {
 			})
 
 			if (res.ok) {
-				setAuth(await res.json())
+				setAuth({ provider: 'email', ...(await res.json()) })
 				history.push('/home')
 			}
 		} catch (error) {
