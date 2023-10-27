@@ -7,9 +7,13 @@ const refreshAccessToken = async () => {
 
 	const res = await fetch(
 		`${base}${refresh}?` +
-			new URLSearchParams({
-				refresh_token: auth.refresh_token
-			})
+			{
+				method: 'GET',
+				headers: {
+					provider: auth.provider,
+					Authorization: `Bearer ${auth.refresh_token}`
+				}
+			}
 	)
 
 	const newAuth = await res.json()

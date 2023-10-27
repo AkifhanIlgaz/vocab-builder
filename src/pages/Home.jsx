@@ -22,7 +22,7 @@ export const Home = () => {
 
 	const fetchWords = async () => {
 		try {
-			const res = await fetch(url, { headers: { Authorization: `Bearer ${auth.access_token}` } })
+			const res = await fetch(url, { headers: { provider: auth.provider, Authorization: `Bearer ${auth.access_token}` } })
 
 			if (res.statusText === 'Invalid token') {
 				await refreshAccessToken()
@@ -53,9 +53,12 @@ export const Home = () => {
 		const res = await fetch(`${base}${signOutUrl}`, {
 			method: 'POST',
 			headers: {
+				provider: auth.provider,
 				Authorization: `Bearer ${auth.access_token}`
 			}
 		})
+
+		console.log(res)
 
 		if (res.statusText == 'Invalid token') {
 			await refreshAccessToken()
