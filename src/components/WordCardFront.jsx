@@ -1,7 +1,7 @@
-import { IonButton, IonCard, IonCardContent, IonCardHeader, IonCardTitle, IonIcon, IonTitle, IonToolbar } from '@ionic/react'
-import { checkmarkOutline, closeOutline, informationCircleOutline, repeatOutline, volumeHigh } from 'ionicons/icons'
+import { IonButton, IonCard, IonCardContent, IonCardHeader, IonCardTitle, IonIcon } from '@ionic/react'
+import { checkmarkOutline, volumeMediumOutline } from 'ionicons/icons'
 import { React } from 'react'
-import { ResetIsExamplesOpen, decrement, increment } from '../api/words'
+import { ResetIsExamplesOpen, increment } from '../api/words'
 
 /**
  *
@@ -37,72 +37,58 @@ const WordCardFront = ({ word, index, setIndex, isFront, setIsFront, setIsExampl
 	}
 
 	return (
-		<>
-			<IonToolbar style={{ marginLeft: '10px' }} color={'transparent'}>
-				<IonButton onClick={() => move(() => setIndex(decrement(index)))} slot="start">
-					Back
-				</IonButton>
-				<IonTitle className="ion-text-center">
-					<IonButton onClick={() => flip(() => setIsFront(!isFront))}>
-						<IonIcon icon={repeatOutline}></IonIcon>
-					</IonButton>
-				</IonTitle>
-				<IonButton onClick={() => move(() => setIndex(increment(index)))} slot="end">
-					Next
-				</IonButton>
-			</IonToolbar>
-
-			<IonCard className="word-card">
-				<IonCardTitle
-					className="ion-padding"
-					style={{
-						width: '100%',
-						display: 'flex',
-						justifyContent: 'space-between',
-						alignItems: 'center'
-					}}
-				>
-					Box: {word.box}
-					<div className="ion-floating-right">
-						<IonButton onClick={() => UK.play()} size="small">
-							UK
-							<IonIcon icon={volumeHigh} slot="end"></IonIcon>
-						</IonButton>
-						<IonButton color={'danger'} onClick={() => US.play()} size="small">
-							US
-							<IonIcon icon={volumeHigh} slot="end"></IonIcon>
-						</IonButton>
-						<IonButton color={'warning'} size="small" href={word.source} target="_blank" rel="noopener noreferrer">
-							<IonIcon icon={informationCircleOutline}></IonIcon>
-						</IonButton>
-					</div>
-				</IonCardTitle>
-				<IonCardHeader className="ion-text-center">
-					<IonCardTitle>
-						{word.word}
-						<IonCardTitle>({word.header.partOfSpeech})</IonCardTitle>
-					</IonCardTitle>
-				</IonCardHeader>
-				<IonCardContent className="ion-floating-left">
-					<div dangerouslySetInnerHTML={{ __html: word.definitions[0].examples[0].includes('span') ? word.definitions[0].examples[0] : findWord(word.definitions[0].examples[0], word.word) }}></div>
-				</IonCardContent>
-			</IonCard>
-			<div
+		<IonCard
+			className="word-card ion-no-margin"
+			color={'card'}
+			style={{
+				height: '50vh'
+			}}
+		>
+			<IonCardTitle
+				className="ion-padding-start ion-padding-end"
 				style={{
 					width: '100%',
 					display: 'flex',
-					justifyContent: 'space-evenly',
+					justifyContent: 'space-between',
 					alignItems: 'center'
 				}}
 			>
-				<IonButton color={'danger'}>
-					<IonIcon icon={closeOutline}></IonIcon>
+				<IonButton onClick={() => UK.play()} size="small">
+					UK
+					<IonIcon icon={volumeMediumOutline} slot="end"></IonIcon>
 				</IonButton>
-				<IonButton color={'success'}>
-					<IonIcon icon={checkmarkOutline}></IonIcon>
+				<IonButton color={'danger'} onClick={() => US.play()} size="small">
+					US
+					<IonIcon icon={volumeMediumOutline} slot="end"></IonIcon>
 				</IonButton>
-			</div>
-		</>
+			</IonCardTitle>
+			<IonCardHeader className="ion-text-center">
+				<IonCardTitle>
+					{word.word}
+					<IonCardTitle>({word.header.partOfSpeech})</IonCardTitle>
+				</IonCardTitle>
+			</IonCardHeader>
+			<IonCardContent className="ion-floating-left ion-text-center">
+				<div dangerouslySetInnerHTML={{ __html: word.definitions[0].examples[0].includes('span') ? word.definitions[0].examples[0] : findWord(word.definitions[0].examples[0], word.word) }}></div>
+
+				<IonButton color={'light'} className="ion-margin-top" onClick={() => flip(() => setIsFront(!isFront))}>
+					<span
+						className="ion-padding"
+						style={{
+							color: '#283448',
+							fontSize: '15px',
+							fontWeight: 'bold'
+						}}
+					>
+						Tap to see meaning
+					</span>
+				</IonButton>
+			</IonCardContent>
+
+			<IonButton color={'success'} onClick={() => move(() => setIndex(increment(index)))}>
+				<IonIcon icon={checkmarkOutline}></IonIcon>
+			</IonButton>
+		</IonCard>
 	)
 }
 
