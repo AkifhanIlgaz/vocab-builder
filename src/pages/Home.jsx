@@ -91,7 +91,7 @@ export const Home = () => {
 
 	return (
 		<IonPage>
-			<IonContent color={'white'} scrollY={false}>
+			<IonContent color={'white'}>
 				<IonGrid className="ion-align-items-center ion-justify-content-center ">
 					<IonRow className="ion-align-items-center ion-justify-content-center ion-height">
 						<IonCol>{index === DefaultWordsLength || currentWords.length == 0 ? 'Loading' : isFront ? <WordCardFront word={currentWords[index]} index={index} setIndex={setIndex} isFront={isFront} setIsFront={setIsFront} setIsExamplesOpen={setIsExamplesOpen} /> : <WordCardBack word={currentWords[index]} index={index} setIndex={setIndex} isFront={isFront} setIsFront={setIsFront} isExamplesOpen={isExamplesOpen} setIsExamplesOpen={setIsExamplesOpen} />}</IonCol>
